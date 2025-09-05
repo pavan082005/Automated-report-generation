@@ -1,0 +1,454 @@
+pandas
+openpyxl
+reportlab
+python-docx
+python-pptx
+pypandoc
+odfpy
+fastapi
+uvicorn
+python-dotenv
+matplotlib
+apscheduler
+aiosmtpd
+python-dotenv
+fastapi
+python-multipart
+
+
+def generate_excel(
+    uploaded_file,
+    data_dir=".",
+    max_numeric_charts=10,
+    max_cat_bars=10,
+    figsize=(6, 4),
+    include_scatter_matrix=False
+):
+    DATA_DIR = Path(data_dir)
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    ts = time.strftime("%Y%m%d_%H%M%S")
+    df = pd.read_csv(uploaded_file.file)
+    output_file = DATA_DIR / f"report_{ts}.xlsx"
+
+    numeric = df.select_dtypes(include='number')
+    categorical = df.select_dtypes(exclude='number')
+
+    describe = df.describe(include='all').transpose()
+    if not numeric.empty:
+        more_stats = pd.DataFrame({
+            'skew': numeric.skew(),
+            'kurtosis': numeric.kurtosis()
+        })
+        describe = describe.join(more_stats, how='outer')
+
+    missing_count = df.isnull().sum()
+    missing_pct = (missing_count / len(df)) * 100
+    missing_df = pd.concat([missing_count, missing_pct], axis=1)
+    missing_df.columns = ['missing_count', 'missing_pct']
+
+    data_dict = []
+    for col in df.columns:
+        sample = df[col].dropna().astype(str).head(3).tolist()
+        data_dict.append({
+            'column': col,
+            'dtype': str(df[col].dtype),
+            'n_unique': df[col].nunique(dropna=True),
+            'n_missing': int(df[col].isnull().sum()),
+            'sample_values': ", ".join(sample)
+        })
+    data_dict_df = pd.DataFrame(data_dict).set_index('column')
+
+    top_cats = {}
+    for col in categorical.columns:
+        vc = df[col].value_counts(dropna=False).head(max_cat_bars)
+        top_cats[col] = vc
+
+    with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+        df.to_excel(writer, sheet_name="Raw Data", index=False)
+        describe.to_excel(writer, sheet_name="Summary")
+        data_dict_df.to_excel(writer, sheet_name="Data Dictionary")
+        missing_df.to_excel(writer, sheet_name="Missing Values")
+        top_cats_frames = []
+        for col, vc in top_cats.items():
+            tmp = vc.reset_index()
+            tmp.columns = [f"{col}_value", f"{col}_count"]
+            top_cats_frames.append(tmp)
+        if top_cats_frames:
+            max_rows = max(len(t) for t in top_cats_frames)
+            expanded = []
+            for t in top_cats_frames:
+                t2 = t.reindex(range(max_rows))
+                expanded.append(t2.reset_index(drop=True))
+            merged = pd.concat(expanded, axis=1)
+            merged.to_excel(writer, sheet_name="Top Categories", index=False)
+        else:
+            pd.DataFrame().to_excel(writer, sheet_name="Top Categories")
+
+    tmpdir = Path(tempfile.mkdtemp(prefix="excel_report_"))
+    created_images = []
+
+    try:
+        num_cols = numeric.columns.tolist()[:max_numeric_charts]
+        for col in num_cols:
+            plt.figure(figsize=figsize)
+            df[col].dropna().plot.hist(bins=30)
+            plt.title(f'Histogram: {col}')
+            plt.xlabel(col)
+            hist_path = tmpdir / f"hist_{col}.png"
+            plt.tight_layout()
+            plt.savefig(hist_path)
+            plt.close()
+            created_images.append((hist_path, f"Histogram - {col}"))
+
+            plt.figure(figsize=figsize)
+            df[col].dropna().plot.box()
+            plt.title(f'Boxplot: {col}')
+            plt.ylabel(col)
+            box_path = tmpdir / f"box_{col}.png"
+            plt.tight_layout()
+            plt.savefig(box_path)
+            plt.close()
+            created_images.append((box_path, f"Boxplot - {col}"))
+
+        if numeric.shape[1] >= 2:
+            corr = numeric.corr()
+            plt.figure(figsize=(max(6, corr.shape[0]*0.6), max(4, corr.shape[1]*0.5)))
+            im = plt.imshow(corr, interpolation='nearest', aspect='auto')
+            plt.colorbar(im)
+            plt.xticks(range(len(corr.columns)), corr.columns, rotation=90)
+            plt.yticks(range(len(corr.index)), corr.index)
+            plt.title('Correlation matrix')
+            heat_path = tmpdir / "correlation_heatmap.png"
+            plt.tight_layout()
+            plt.savefig(heat_path)
+            plt.close()
+            created_images.append((heat_path, "Correlation heatmap"))
+
+        for col, vc in top_cats.items():
+            plt.figure(figsize=figsize)
+            labels = [str(x) for x in vc.index]
+            heights = vc.values
+            plt.bar(range(len(heights)), heights)
+            plt.xticks(range(len(heights)), labels, rotation=45, ha='right')
+            plt.title(f"Top {len(heights)} values: {col}")
+            plt.tight_layout()
+            bar_path = tmpdir / f"bar_{col}.png"
+            plt.savefig(bar_path)
+            plt.close()
+            created_images.append((bar_path, f"Top values - {col}"))
+
+        datetime_cols = [c for c in df.columns if np.issubdtype(df[c].dtype, np.datetime64)]
+        if not datetime_cols:
+            for c in df.columns:
+                if df[c].dtype == object:
+                    try:
+                        parsed = pd.to_datetime(df[c], errors='coerce')
+                        if parsed.notnull().sum() > (0.5 * len(df)):
+                            df[c] = parsed
+                            datetime_cols.append(c)
+                            break
+                    except Exception:
+                        continue
+
+        if datetime_cols and not numeric.empty:
+            dcol = datetime_cols[0]
+            ncol = numeric.columns[0]
+            ts_df = df[[dcol, ncol]].dropna().sort_values(by=dcol)
+            if not ts_df.empty:
+                plt.figure(figsize=(8, 4))
+                plt.plot(ts_df[dcol], ts_df[ncol], marker='o', linestyle='-')
+                plt.title(f"Timeseries: {ncol} over {dcol}")
+                plt.xlabel(dcol)
+                plt.ylabel(ncol)
+                plt.tight_layout()
+                ts_path = tmpdir / f"timeseries_{ncol}_by_{dcol}.png"
+                plt.savefig(ts_path)
+                plt.close()
+                created_images.append((ts_path, f"Timeseries - {ncol} by {dcol}"))
+
+        if include_scatter_matrix and numeric.shape[1] >= 2:
+            cols_for_matrix = numeric.columns.tolist()[:6]
+            pd.plotting.scatter_matrix(numeric[cols_for_matrix].dropna(), figsize=(8, 8))
+            sm_path = tmpdir / "scatter_matrix.png"
+            plt.tight_layout()
+            plt.savefig(sm_path)
+            plt.close()
+            created_images.append((sm_path, "Scatter matrix"))
+
+        wb = load_workbook(output_file)
+        if "Charts" in wb.sheetnames:
+            ws = wb["Charts"]
+        else:
+            ws = wb.create_sheet("Charts")
+
+        row = 1
+        for img_path, title in created_images:
+            ws.cell(row=row, column=1, value=title)
+            row += 1
+            img = XLImage(str(img_path))
+            anchor_cell = f"A{row}"
+            ws.add_image(img, anchor_cell)
+            row += 20
+
+        wb.save(output_file)
+
+    finally:
+        try:
+            shutil.rmtree(tmpdir)
+        except Exception:
+            pass
+    update_report_stats("excel", output_file, df)
+
+    return str(output_file)
+
+# Generate PDF
+
+
+def generate_pdf(uploaded_file, output_dir=None,
+                 logo_path=r"E:\report_automation\frontend\report-frontend\images\indxo.png"):
+   
+
+    ts = time.strftime("%Y%m%d_%H%M%S")
+
+    # Determine output directory
+    try:
+        DATA_DIR
+        default_dir = DATA_DIR
+    except Exception:
+        default_dir = None
+
+    if output_dir:
+        outdir = Path(output_dir)
+    elif default_dir:
+        outdir = Path(default_dir)
+    else:
+        outdir = Path(tempfile.mkdtemp(prefix="report_"))
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    # Read CSV
+    if hasattr(uploaded_file, "file"):
+        df = pd.read_csv(uploaded_file.file)
+    else:
+        df = pd.read_csv(uploaded_file)
+
+    df.columns = [str(c) for c in df.columns]
+    numeric_df = df.apply(pd.to_numeric, errors="coerce")
+    numeric_cols = numeric_df.select_dtypes(include=[np.number]).columns.tolist()
+    output_file = outdir / f"report_{ts}.pdf"
+
+    # Fonts & styles
+    try:
+        pdfmetrics.registerFont(TTFont("DejaVuSans", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
+        base_font = "DejaVuSans"
+    except Exception:
+        base_font = "Helvetica"
+
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle("TitleLight", parent=styles["Title"], fontName=base_font, fontSize=20, leading=24, textColor=colors.black, alignment=1)
+    date_style = ParagraphStyle("Date", parent=styles["Normal"], fontName=base_font, fontSize=9, textColor=colors.black, alignment=1)
+    heading_style = ParagraphStyle("Heading", parent=styles["Heading2"], fontName=base_font, fontSize=12, textColor=colors.black, spaceAfter=6)
+    normal_style = ParagraphStyle("NormalLight", parent=styles["Normal"], fontName=base_font, fontSize=10, textColor=colors.black)
+
+    palette = ['#FF6B6B', '#4ecdc4', '#ffd166', '#845ef7', '#2b8aee', '#ff9f1c', '#6a4c93']
+
+    # ---------- Chart helpers ----------
+    def fig_to_buffer(fig, dpi=200):
+        buf = BytesIO()
+        fig.savefig(buf, format="png", dpi=dpi, facecolor='white', bbox_inches="tight")
+        plt.close(fig)
+        buf.seek(0)
+        return buf
+
+    def create_donut_fig(labels, values, palette=None, startangle=140, donut_width=0.34):
+        if palette is None:
+            palette = ['#FF6B6B', '#4ecdc4', '#ffd166', '#845ef7', '#2b8aee', '#ff9f1c']
+        colors_list = [palette[i % len(palette)] for i in range(len(values))]
+        fig, ax = plt.subplots(figsize=(6.5,6.5))
+        fig.patch.set_facecolor('white')
+        ax.set_facecolor('white')
+        ax.axis('equal')
+
+        total = np.sum(values)
+        explode = [0.02 if (v / total) > 0.05 else 0.0 for v in values]
+
+        def autopct_gen(thresh=2.5):
+            def autopct(pct):
+                return "" if pct < thresh else f"{pct:.1f}%"
+            return autopct
+
+        wedges, _, autotexts = ax.pie(values, radius=1.0, colors=colors_list,
+                                      startangle=startangle, explode=explode,
+                                      labels=None, autopct=autopct_gen(2.5),
+                                      pctdistance=0.72,
+                                      wedgeprops=dict(width=donut_width, edgecolor='white', linewidth=1.2),
+                                      normalize=True)
+
+        for t in autotexts:
+            t.set_color('black')
+            t.set_fontsize(11)
+            t.set_fontweight('bold')
+
+        centre_circle = plt.Circle((0,0), 1-donut_width-0.01, color='white', linewidth=0)
+        ax.add_artist(centre_circle)
+
+        ax.legend(wedges, labels, title="Platforms",
+                  loc='center left', bbox_to_anchor=(1.05,0.5),
+                  frameon=False, fontsize=10, title_fontsize=11)
+        ax.set_title("Performance by Social Media Platform", color='black', fontsize=16, pad=18)
+        return fig
+
+    def create_bar_fig(categories, values, title="Performance by Type of Content"):
+        fig, ax = plt.subplots(figsize=(6.5,3))
+        ax.bar(categories, values, color=[palette[i%len(palette)] for i in range(len(values))])
+        ax.set_title(title, color="black")
+        ax.set_ylabel("Count", color="black")
+        ax.tick_params(colors="black")
+        return fig
+
+    def create_line_area_fig(date_series, value_series, y_label="Value"):
+        fig, ax = plt.subplots(figsize=(7,3))
+        ax.plot(date_series, value_series, linewidth=1.5, color="#2b8aee")
+        ax.fill_between(date_series, value_series, alpha=0.25, color="#2b8aee")
+        ax.set_title(f"Trend ({y_label})", color="black")
+        ax.tick_params(colors="black")
+        return fig
+
+    def create_hist_fig(values, title):
+        fig, ax = plt.subplots(figsize=(6.5,3))
+        ax.hist(values, bins=20, color="#4ecdc4")
+        ax.set_title(title, color="black")
+        ax.tick_params(colors="black")
+        return fig
+
+    def create_gauge_fig(percent, label):
+        fig, ax = plt.subplots(figsize=(2.4,0.6))
+        ax.barh([0], [percent], height=0.6, color="#36A2EB")
+        ax.set_xlim(0,100)
+        ax.set_yticks([])
+        ax.set_xlabel(f"{label}: {int(percent)}%")
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+        ax.tick_params(colors="black")
+        return fig
+
+    # ---------- Document building ----------
+    doc = SimpleDocTemplate(str(output_file), pagesize=letter,
+                            rightMargin=36, leftMargin=36, topMargin=48, bottomMargin=36)
+
+    elements = []
+
+    def draw_background(canvas, doc_obj):
+        canvas.saveState()
+        canvas.setFillColor(colors.white)
+        canvas.rect(0, 0, doc_obj.pagesize[0], doc_obj.pagesize[1], stroke=0, fill=1)
+        if logo_path and os.path.exists(logo_path):
+            w, h = 60, 60
+            x = doc_obj.pagesize[0] - (w+40)
+            y = doc_obj.pagesize[1] - (h+40)
+            canvas.drawImage(logo_path, x, y, width=w, height=h, preserveAspectRatio=True, mask='auto')
+        canvas.setFont(base_font, 8)
+        canvas.setFillColor(colors.black)
+        canvas.drawRightString(doc_obj.pagesize[0]-30, 20, f"Page {doc_obj.page}")
+        canvas.restoreState()
+
+    # --- Header ---
+    if logo_path and os.path.exists(logo_path):
+        img_flow = Image(ImageReader(logo_path), width=60, height=60)
+        header_table_data = [[img_flow,
+                              Paragraph("MACHINE PERFORMANCE REPORT", title_style),
+                              Paragraph(time.strftime("%d %B %Y"), date_style)]]
+        header_table = Table(header_table_data, colWidths=[70,360,80])
+        elements.append(header_table)
+    else:
+        elements.append(Paragraph("MACHINE PERFORMANCE REPORT", title_style))
+        elements.append(Paragraph(time.strftime("%d %B %Y"), date_style))
+    elements.append(Spacer(1,12))
+
+    # --- Summary table ---
+    elements.append(Paragraph("Summary", heading_style))
+    preview_rows = df.head(8)
+    table_data = [list(preview_rows.columns)]
+    for _, r in preview_rows.iterrows():
+        row = ["" if pd.isna(v) else str(v) for v in r]
+        table_data.append(row)
+    preview_table = Table(table_data, repeatRows=1, hAlign="LEFT")
+    preview_table.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.lightgrey),
+                                       ("TEXTCOLOR",(0,0),(-1,-1),colors.black),
+                                       ("GRID",(0,0),(-1,-1),0.25,colors.grey)]))
+    elements.append(preview_table)
+    elements.append(Spacer(1,12))
+
+    # --- Key metrics ---
+    elements.append(Paragraph("Key Metrics (Numeric columns)", heading_style))
+    if numeric_cols:
+        stats = numeric_df[numeric_cols].describe().T.round(2)
+        stats_table_data = [["column"] + stats.columns.tolist()]
+        for col in stats.index[:12]:
+            stats_table_data.append([col]+[str(x) for x in stats.loc[col]])
+        stats_table = Table(stats_table_data, repeatRows=1)
+        stats_table.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.lightgrey),
+                                         ("TEXTCOLOR",(0,0),(-1,-1),colors.black),
+                                         ("GRID",(0,0),(-1,-1),0.25,colors.grey)]))
+        elements.append(stats_table)
+    else:
+        elements.append(Paragraph("No numeric columns detected.", normal_style))
+    elements.append(Spacer(1,18))
+
+    # --- Bar chart ---
+    elements.append(Paragraph("Performance by Type of Content (Bar chart)", heading_style))
+    bar_fig = create_bar_fig(["Picture","Text","Video","Link"], [10,15,7,5])
+    elements.append(Image(fig_to_buffer(bar_fig), width=6.5*inch, height=3*inch))
+    elements.append(Spacer(1,12))
+
+    # --- Line/area chart ---
+    elements.append(Paragraph("Trend over Time (Line & Area)", heading_style))
+    line_fig = create_line_area_fig(pd.date_range("2024-01-01", periods=10),
+                                    np.random.randint(10,100,10))
+    elements.append(Image(fig_to_buffer(line_fig), width=6.5*inch, height=3*inch))
+    elements.append(Spacer(1,12))
+
+    # --- Histogram ---
+    elements.append(Paragraph("Distribution (Histogram)", heading_style))
+    hist_fig = create_hist_fig(np.random.randn(200), "Distribution Example")
+    elements.append(Image(fig_to_buffer(hist_fig), width=6.5*inch, height=3*inch))
+    elements.append(Spacer(1,12))
+
+    # --- Gauges ---
+    elements.append(Paragraph("Peak Engagement Times (Gauge-like bars)", heading_style))
+    for period, percent in {"Morning":25, "Afternoon":35, "Evening":30, "Midnight":10}.items():
+        gfig = create_gauge_fig(percent, period)
+        elements.append(Image(fig_to_buffer(gfig), width=2.2*inch, height=0.45*inch))
+        elements.append(Spacer(1,6))
+    elements.append(Spacer(1,12))
+
+    # --- Donut chart ---
+    elements.append(Paragraph("Performance by Social Media Platform (Donut)", heading_style))
+    if df.shape[1]>=1 and df.iloc[:,0].dtype==object:
+        cat_counts = df.iloc[:,0].value_counts().nlargest(6)
+        labels, values = list(cat_counts.index), cat_counts.values.astype(float)
+    elif numeric_cols:
+        labels, values = numeric_cols[:6], numeric_df[numeric_cols[:6]].sum().values.astype(float)
+    else:
+        labels, values = ["N/A"], np.array([1.0])
+    donut_fig = create_donut_fig(labels, values, palette=palette)
+    elements.append(Image(fig_to_buffer(donut_fig), width=6.2*inch, height=6.2*inch))
+    elements.append(Spacer(1,12))
+
+    # --- Automated summary ---
+    elements.append(Paragraph("Automated Summary", heading_style))
+    summary_lines=[]
+    if numeric_cols:
+        top_col = max(numeric_cols, key=lambda c:numeric_df[c].sum(skipna=True))
+        summary_lines.append(f"- Column with largest total: <b>{top_col}</b>")
+    if df.shape[1]>=1 and df.iloc[:,0].dtype==object:
+        top_cat = df.iloc[:,0].value_counts().idxmax()
+        summary_lines.append(f"- Most frequent value in {df.columns[0]}: {top_cat}")
+    elements.append(Paragraph("<br/>".join(summary_lines), normal_style))
+    elements.append(Spacer(1,18))
+
+    # Build PDF
+    doc.build(elements, onFirstPage=draw_background, onLaterPages=draw_background)
+    update_report_stats("excel", output_file, df)
+
+    return str(output_file)

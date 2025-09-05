@@ -1,0 +1,833 @@
+{
+    "csv": [
+        {
+            "timestamp": "2025-09-04 18:17:15",
+            "path": "generated_reports\\report_20250904_181715.csv",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:19:22",
+            "path": "generated_reports\\report_20250904_181919.csv",
+            "rows": 150000,
+            "columns": 21,
+            "numeric_columns": [
+                "Avg VTAT",
+                "Avg CTAT",
+                "Cancelled Rides by Customer",
+                "Cancelled Rides by Driver",
+                "Incomplete Rides",
+                "Booking Value",
+                "Ride Distance",
+                "Driver Ratings",
+                "Customer Rating"
+            ],
+            "top_categories": {
+                "Date": {
+                    "2024-11-16": 462,
+                    "2024-05-09": 456,
+                    "2024-09-18": 456,
+                    "2024-01-26": 452,
+                    "2024-02-06": 452
+                },
+                "Time": {
+                    "17:44:57": 16,
+                    "19:17:33": 12,
+                    "10:23:23": 11,
+                    "15:23:56": 11,
+                    "18:59:55": 11
+                },
+                "Booking ID": {
+                    "\"CNR7908610\"": 3,
+                    "\"CNR9603232\"": 3,
+                    "\"CNR7199036\"": 3,
+                    "\"CNR6337479\"": 3,
+                    "\"CNR5292943\"": 3
+                },
+                "Booking Status": {
+                    "Completed": 93000,
+                    "Cancelled by Driver": 27000,
+                    "No Driver Found": 10500,
+                    "Cancelled by Customer": 10500,
+                    "Incomplete": 9000
+                },
+                "Customer ID": {
+                    "\"CID4523979\"": 3,
+                    "\"CID8727691\"": 3,
+                    "\"CID5481002\"": 3,
+                    "\"CID6715450\"": 3,
+                    "\"CID7828101\"": 3
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:24:49",
+            "path": "generated_reports\\report_20250904_182446.csv",
+            "rows": 150000,
+            "columns": 21,
+            "numeric_columns": [
+                "Avg VTAT",
+                "Avg CTAT",
+                "Cancelled Rides by Customer",
+                "Cancelled Rides by Driver",
+                "Incomplete Rides",
+                "Booking Value",
+                "Ride Distance",
+                "Driver Ratings",
+                "Customer Rating"
+            ],
+            "top_categories": {
+                "Date": {
+                    "2024-11-16": 462,
+                    "2024-05-09": 456,
+                    "2024-09-18": 456,
+                    "2024-01-26": 452,
+                    "2024-02-06": 452
+                },
+                "Time": {
+                    "17:44:57": 16,
+                    "19:17:33": 12,
+                    "10:23:23": 11,
+                    "15:23:56": 11,
+                    "18:59:55": 11
+                },
+                "Booking ID": {
+                    "\"CNR7908610\"": 3,
+                    "\"CNR9603232\"": 3,
+                    "\"CNR7199036\"": 3,
+                    "\"CNR6337479\"": 3,
+                    "\"CNR5292943\"": 3
+                },
+                "Booking Status": {
+                    "Completed": 93000,
+                    "Cancelled by Driver": 27000,
+                    "No Driver Found": 10500,
+                    "Cancelled by Customer": 10500,
+                    "Incomplete": 9000
+                },
+                "Customer ID": {
+                    "\"CID4523979\"": 3,
+                    "\"CID8727691\"": 3,
+                    "\"CID5481002\"": 3,
+                    "\"CID6715450\"": 3,
+                    "\"CID7828101\"": 3
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:25:26",
+            "path": "generated_reports\\report_20250904_182526.csv",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:26:13",
+            "path": "generated_reports\\report_20250904_182613.csv",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:26:21",
+            "path": "generated_reports\\report_20250904_182621.csv",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:43:34",
+            "path": "generated_reports\\report_20250904_184334.csv",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:43:52",
+            "path": "generated_reports\\report_20250904_184352.csv",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:44:13",
+            "path": "generated_reports\\report_20250904_184413.csv",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:54:53",
+            "path": "generated_reports\\report_20250904_185427.csv",
+            "rows": 150000,
+            "columns": 22,
+            "numeric_columns": [
+                "Avg VTAT",
+                "Avg CTAT",
+                "Cancelled Rides by Customer",
+                "Cancelled Rides by Driver",
+                "Incomplete Rides",
+                "Booking Value",
+                "Ride Distance",
+                "Driver Ratings",
+                "Customer Rating"
+            ],
+            "top_categories": {
+                "Date": {
+                    "2024-11-16": 462,
+                    "2024-05-09": 456,
+                    "2024-09-18": 456,
+                    "2024-01-26": 452,
+                    "2024-02-06": 452
+                },
+                "Time": {
+                    "17:44:57": 16,
+                    "19:17:33": 12,
+                    "10:23:23": 11,
+                    "15:23:56": 11,
+                    "18:59:55": 11
+                },
+                "Booking ID": {
+                    "\"CNR7908610\"": 3,
+                    "\"CNR9603232\"": 3,
+                    "\"CNR7199036\"": 3,
+                    "\"CNR6337479\"": 3,
+                    "\"CNR5292943\"": 3
+                },
+                "Booking Status": {
+                    "Completed": 93000,
+                    "Cancelled by Driver": 27000,
+                    "No Driver Found": 10500,
+                    "Cancelled by Customer": 10500,
+                    "Incomplete": 9000
+                },
+                "Customer ID": {
+                    "\"CID4523979\"": 3,
+                    "\"CID8727691\"": 3,
+                    "\"CID5481002\"": 3,
+                    "\"CID6715450\"": 3,
+                    "\"CID7828101\"": 3
+                }
+            }
+        }
+    ],
+    "emails_sent": {
+        "pdf": [
+            {
+                "timestamp": "2025-09-04 14:42:59",
+                "to_email": "pavan082005@gmail.com",
+                "path": "generated_reports\\report_20250904_000614.pdf"
+            }
+        ]
+    },
+    "excel": [
+        {
+            "timestamp": "2025-09-04 14:48:54",
+            "path": "generated_reports\\report_20250904_144848.pdf",
+            "rows": 15,
+            "columns": 1,
+            "numeric_columns": [],
+            "top_categories": {
+                "index,UVIndex,Humidity,WindSpeed,RainfallAmount,Temperature,Crowdedness": {
+                    "0,2,15,2,5,68,0.15": 1,
+                    "1,10,95,90,2,60,0.98": 1,
+                    "2,1,10,1,7,63,0.1": 1,
+                    "3,7,98,30,3,55,0.85": 1,
+                    "4,3,18,3,18,50,0.2": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 14:51:26",
+            "path": "generated_reports\\report_20250904_145115.pdf",
+            "rows": 150000,
+            "columns": 21,
+            "numeric_columns": [
+                "Avg VTAT",
+                "Avg CTAT",
+                "Cancelled Rides by Customer",
+                "Cancelled Rides by Driver",
+                "Incomplete Rides",
+                "Booking Value",
+                "Ride Distance",
+                "Driver Ratings",
+                "Customer Rating"
+            ],
+            "top_categories": {
+                "Date": {
+                    "2024-11-16": 462,
+                    "2024-05-09": 456,
+                    "2024-09-18": 456,
+                    "2024-01-26": 452,
+                    "2024-02-06": 452
+                },
+                "Time": {
+                    "17:44:57": 16,
+                    "19:17:33": 12,
+                    "10:23:23": 11,
+                    "15:23:56": 11,
+                    "18:59:55": 11
+                },
+                "Booking ID": {
+                    "\"CNR7908610\"": 3,
+                    "\"CNR9603232\"": 3,
+                    "\"CNR7199036\"": 3,
+                    "\"CNR6337479\"": 3,
+                    "\"CNR5292943\"": 3
+                },
+                "Booking Status": {
+                    "Completed": 93000,
+                    "Cancelled by Driver": 27000,
+                    "No Driver Found": 10500,
+                    "Cancelled by Customer": 10500,
+                    "Incomplete": 9000
+                },
+                "Customer ID": {
+                    "\"CID4523979\"": 3,
+                    "\"CID8727691\"": 3,
+                    "\"CID5481002\"": 3,
+                    "\"CID6715450\"": 3,
+                    "\"CID7828101\"": 3
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 17:31:12",
+            "path": "generated_reports\\report_20250904_173107.pdf",
+            "rows": 777,
+            "columns": 19,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 17:34:53",
+            "path": "generated_reports\\report_20250904_173448.pdf",
+            "rows": 777,
+            "columns": 19,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 17:36:33",
+            "path": "generated_reports\\report_20250904_173545.pdf",
+            "rows": 150000,
+            "columns": 22,
+            "numeric_columns": [
+                "Avg VTAT",
+                "Avg CTAT",
+                "Cancelled Rides by Customer",
+                "Cancelled Rides by Driver",
+                "Incomplete Rides",
+                "Booking Value",
+                "Ride Distance",
+                "Driver Ratings",
+                "Customer Rating"
+            ],
+            "top_categories": {
+                "Date": {
+                    "2024-11-16": 462,
+                    "2024-05-09": 456,
+                    "2024-09-18": 456,
+                    "2024-01-26": 452,
+                    "2024-02-06": 452
+                },
+                "Time": {
+                    "17:44:57": 16,
+                    "19:17:33": 12,
+                    "10:23:23": 11,
+                    "15:23:56": 11,
+                    "18:59:55": 11
+                },
+                "Booking ID": {
+                    "\"CNR7908610\"": 3,
+                    "\"CNR9603232\"": 3,
+                    "\"CNR7199036\"": 3,
+                    "\"CNR6337479\"": 3,
+                    "\"CNR5292943\"": 3
+                },
+                "Booking Status": {
+                    "Completed": 93000,
+                    "Cancelled by Driver": 27000,
+                    "No Driver Found": 10500,
+                    "Cancelled by Customer": 10500,
+                    "Incomplete": 9000
+                },
+                "Customer ID": {
+                    "\"CID4523979\"": 3,
+                    "\"CID8727691\"": 3,
+                    "\"CID5481002\"": 3,
+                    "\"CID6715450\"": 3,
+                    "\"CID7828101\"": 3
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 17:37:12",
+            "path": "generated_reports\\report_20250904_173634.pdf",
+            "rows": 150000,
+            "columns": 22,
+            "numeric_columns": [
+                "Avg VTAT",
+                "Avg CTAT",
+                "Cancelled Rides by Customer",
+                "Cancelled Rides by Driver",
+                "Incomplete Rides",
+                "Booking Value",
+                "Ride Distance",
+                "Driver Ratings",
+                "Customer Rating"
+            ],
+            "top_categories": {
+                "Date": {
+                    "2024-11-16": 462,
+                    "2024-05-09": 456,
+                    "2024-09-18": 456,
+                    "2024-01-26": 452,
+                    "2024-02-06": 452
+                },
+                "Time": {
+                    "17:44:57": 16,
+                    "19:17:33": 12,
+                    "10:23:23": 11,
+                    "15:23:56": 11,
+                    "18:59:55": 11
+                },
+                "Booking ID": {
+                    "\"CNR7908610\"": 3,
+                    "\"CNR9603232\"": 3,
+                    "\"CNR7199036\"": 3,
+                    "\"CNR6337479\"": 3,
+                    "\"CNR5292943\"": 3
+                },
+                "Booking Status": {
+                    "Completed": 93000,
+                    "Cancelled by Driver": 27000,
+                    "No Driver Found": 10500,
+                    "Cancelled by Customer": 10500,
+                    "Incomplete": 9000
+                },
+                "Customer ID": {
+                    "\"CID4523979\"": 3,
+                    "\"CID8727691\"": 3,
+                    "\"CID5481002\"": 3,
+                    "\"CID6715450\"": 3,
+                    "\"CID7828101\"": 3
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 17:41:19",
+            "path": "generated_reports\\report_20250904_174109.pdf",
+            "rows": 777,
+            "columns": 19,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 17:48:14",
+            "path": "generated_reports\\report_20250904_174804.pdf",
+            "rows": 777,
+            "columns": 19,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:07:39",
+            "path": "generated_reports\\report_20250904_180732.pdf",
+            "rows": 777,
+            "columns": 19,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        },
+        {
+            "timestamp": "2025-09-04 18:46:10",
+            "path": "generated_reports\\report_20250904_184608.pdf",
+            "rows": 777,
+            "columns": 19,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        }
+    ],
+    "pdf": [
+        {
+            "timestamp": "2025-09-04 17:25:53",
+            "path": "E:\\report_generation\\report_automation\\backend\\generated_reports\\report_20250904_172549.pdf",
+            "rows": 777,
+            "columns": 18,
+            "numeric_columns": [
+                "Apps",
+                "Accept",
+                "Enroll",
+                "Top10perc",
+                "Top25perc",
+                "F_Undergrad",
+                "P_Undergrad",
+                "Outstate",
+                "Room_Board",
+                "Books",
+                "Personal",
+                "PhD",
+                "Terminal",
+                "S_F_Ratio",
+                "perc_alumni",
+                "Expend",
+                "Grad_Rate"
+            ],
+            "top_categories": {
+                "Names": {
+                    "Abilene Christian University": 1,
+                    "Southern Methodist University": 1,
+                    "Sarah Lawrence College": 1,
+                    "Savannah Coll. of Art and Design": 1,
+                    "Schreiner College": 1
+                }
+            }
+        }
+    ]
+}

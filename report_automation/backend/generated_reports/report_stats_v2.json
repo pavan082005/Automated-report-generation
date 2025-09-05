@@ -1,0 +1,18 @@
+{
+  "records": [
+    {
+      "timestamp": "2025-09-04T18:17:15",
+      "path": "generated_reports\\report_20250904_181715.csv",
+      "format": "CSV",
+      "rows": 777,
+      "columns": 18
+    }
+  ],
+  "by_date": {
+    "2025-09-04": 1
+  },
+  "by_format": {
+    "CSV": 1
+  },
+  "emails_sent": {}
+}
